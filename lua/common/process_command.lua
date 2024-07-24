@@ -51,15 +51,28 @@ end
 
 local function get_fn_name(bufnr, line, col)
 	local trees = get_parent_langtrees(bufnr, { line, col, line, col })
-	local query = vim.treesitter.query.parse("lua", "((function_declaration name: (identifier) @function-name))")
+	local lang = trees[1]:lang()
+	local get_query = vim.treesitter.query.get or vim.treesitter.query.get_query
+	local ok, query = pcall(get_query, lang, "execa")
+
+	if not ok or not query then
+		return ""
+	end
 
 	for i = 1, #trees do
 		local nodes = get_parent_nodes(trees[i], { line, col, line, col })
 		for j = 1, #nodes do
-			if nodes and nodes[j]:type() == "function_declaration" then
+			if
+				(nodes and nodes[j]:type() == "function_declaration")
+				or (nodes and nodes[j]:type() == "function_item")
+				or (nodes and nodes[j]:type() == "function_definition")
+				or (nodes and nodes[j]:type() == "method_declaration")
+				or (nodes and nodes[j]:type() == "variable_declarator")
+			then
 				local iter = query:iter_captures(nodes[j], 0)
 				local capture_ID, capture_node = iter()
 				local fn_name = vim.treesitter.get_node_text(capture_node, 0)
+				-- print(fn_name,capture_ID)
 				return fn_name
 			end
 		end

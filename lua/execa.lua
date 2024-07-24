@@ -17,7 +17,9 @@ M.exec = function(args)
 	end
 end
 
-M.setup = function()
+M.setup = function(opts)
+	M.config(opts)
+
 	command("Execa", M.exec, {
 		nargs = "*",
 		complete = function()
@@ -28,7 +30,7 @@ end
 
 return M
 
--- TODO: CLI
+-- TODO: CLI -- DONE
 --     1. Parse arguments  -- DONE
 --     2. Autocomplete     -- DONE
 -- TODO: Variables:
@@ -44,14 +46,14 @@ return M
 --     3. Execa repeat <- repeat last command
 -- TODO: Config:
 --     1. Predefined commands
---     2. Define vsplit vs split for the output
---     3. Allow redefine what gets executed, e.g. let people pass a function that receives the command
--- TODO: Tresitter queries for more languages
---     1. Javascript
---     2. Typescript
---     3. Python
---     4. Rust
---     5. Go
+--     2. Define vsplit vs split for the output -- DONE
+--     3. Allow to redefine what gets executed, e.g. let people pass a function that receives the command
+-- TODO: Tresitter queries for more languages -- DONE
+--     1. Javascript -- DONE
+--     2. Typescript -- DONE
+--     3. Python     -- DONE
+--     4. Rust       -- DONE
+--     5. Go         -- DONE
 -- TODO: Extract query to a separate file
 -- TODO: Escape special characters:
 --    1. #
