@@ -2,15 +2,18 @@ local api = vim.api
 local command = api.nvim_create_user_command
 
 local M = {}
+local CONFIG = {
+	split = "split",
+}
 
-M.config = function()
-	print("Config execa")
+M.config = function(config)
+	CONFIG = vim.tbl_deep_extend("force", CONFIG, config)
 end
 
 M.exec = function(args)
 	local action = table.remove(args.fargs, 1)
 	if action == "run" then
-		require("actions.run").run(args.fargs)
+		require("actions.run").run(args.fargs, CONFIG)
 	end
 end
 
