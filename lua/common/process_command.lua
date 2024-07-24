@@ -1,4 +1,4 @@
-local ts_utils = require("nvim-treesitter.ts_utils")
+local api = vim.api
 
 ---@param bufnr integer
 ---@param range Range4
@@ -59,7 +59,7 @@ local function get_fn_name(bufnr, line, col)
 			if nodes and nodes[j]:type() == "function_declaration" then
 				local iter = query:iter_captures(nodes[j], 0)
 				local capture_ID, capture_node = iter()
-				local fn_name = ts_utils.get_node_text(capture_node, 0)[1]
+				local fn_name = vim.treesitter.get_node_text(capture_node, 0)
 				return fn_name
 			end
 		end
@@ -78,11 +78,13 @@ M.process_command = function(args)
 	local fn_name = get_fn_name(bufnr, line, col)
 	local file_path = vim.fn.expand("%:p")
 
-	local cmd = table.concat(args.fargs, " ")
+	local cmd = table.concat(args, " ")
 	cmd = cmd:gsub("$EX_FN", fn_name)
 	cmd = cmd:gsub("$EX_FILE_PATH", file_path)
 	cmd = cmd:gsub("$EX_LINE", line)
 	cmd = cmd:gsub("$EX_COL", col)
+
+	return cmd
 end
 
 return M
