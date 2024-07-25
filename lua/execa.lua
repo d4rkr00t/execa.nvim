@@ -5,6 +5,7 @@ local M = {}
 local CONFIG = {
 	split = "split",
 }
+local LAST_EXECUTED_CMD = nil
 
 M.config = function(config)
 	CONFIG = vim.tbl_deep_extend("force", CONFIG, config)
@@ -13,7 +14,13 @@ end
 M.exec = function(args)
 	local action = table.remove(args.fargs, 1)
 	if action == "run" then
-		require("actions.run").run(args.fargs, CONFIG)
+		LAST_EXECUTED_CMD = require("actions.run").run(args.fargs, CONFIG)
+	elseif action == "repeat" then
+		if not LAST_EXECUTED_CMD then
+			vim.notify("No command to repeat")
+			return
+		end
+		LAST_EXECUTED_CMD = require("actions.run").run(LAST_EXECUTED_CMD, CONFIG)
 	end
 end
 
@@ -39,11 +46,13 @@ return M
 --     3. EX_LINE          -- DONE
 --     4. EX_COL           -- DONE
 --     5. EX_DIR
+--     6. EX_FNAME
+--     7. EX_FNAME_NO_EXT
 -- TODO: Replace variables -- DONE
 -- TODO: Commands:
 --     1. Execa run <cmd> <args>
 --     2. Execa command <predefined_cmd>
---     3. Execa repeat <- repeat last command
+--     3. Execa repeat <- repeat last command -- DONE
 -- TODO: Config:
 --     1. Predefined commands
 --     2. Define vsplit vs split for the output -- DONE
