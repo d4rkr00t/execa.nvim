@@ -60,9 +60,9 @@ return M
 --     2. EX_FILE_PATH     -- DONE
 --     3. EX_LINE          -- DONE
 --     4. EX_COL           -- DONE
---     5. EX_DIR
---     6. EX_FNAME
---     7. EX_FNAME_NO_EXT
+--     5. EX_DIR_PATH      -- DONE
+--     6. EX_FNAME         -- DONE
+--     7. EX_FNAME_NO_EXT  -- DONE
 -- TODO: Replace variables -- DONE
 -- TODO: Commands:         -- DONE
 --     1. Execa run <cmd> <args>                -- DONE
@@ -80,7 +80,7 @@ return M
 --     3. Python     -- DONE
 --     4. Rust       -- DONE
 --     5. Go         -- DONE
--- TODO: Extract query to a separate file
+-- TODO: Extract query to a separate file -- DONE
 -- TODO: Escape special characters:
 --    1. #
 --    2. %

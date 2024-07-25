@@ -71,8 +71,10 @@ local function get_fn_name(bufnr, line, col)
 			then
 				local iter = query:iter_captures(nodes[j], 0)
 				local capture_ID, capture_node = iter()
-				local fn_name = vim.treesitter.get_node_text(capture_node, 0)
-				return fn_name
+				if capture_node then
+					local fn_name = vim.treesitter.get_node_text(capture_node, 0)
+					return fn_name
+				end
 			end
 		end
 	end
@@ -89,9 +91,17 @@ M.process_command = function(raw_cmd)
 	local col = api.nvim_win_get_cursor(0)[2]
 	local fn_name = get_fn_name(bufnr, line, col)
 	local file_path = vim.fn.expand("%:p")
+	local dir_path = vim.fn.expand("%:p:h")
+	local file_name = vim.fn.expand("%:t")
+	local file_name_no_ext = vim.fn.expand("%:t:r")
+	local dir_name = vim.fn.expand("%:h:t")
 
 	local cmd = raw_cmd:gsub("$EX_FN", fn_name)
 	cmd = cmd:gsub("$EX_FILE_PATH", file_path)
+	cmd = cmd:gsub("$EX_FILE_NAME", file_name)
+	cmd = cmd:gsub("$EX_FILE_NAME_NO_EXT", file_name_no_ext)
+	cmd = cmd:gsub("$EX_DIR_PATH", dir_path)
+	cmd = cmd:gsub("$EX_DIR_NAME", dir_name)
 	cmd = cmd:gsub("$EX_LINE", line)
 	cmd = cmd:gsub("$EX_COL", col)
 
