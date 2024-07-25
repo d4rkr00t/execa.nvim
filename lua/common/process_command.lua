@@ -91,17 +91,23 @@ M.process_command = function(raw_cmd)
 	local col = api.nvim_win_get_cursor(0)[2]
 	local fn_name = get_fn_name(bufnr, line, col)
 	local file_path = vim.fn.expand("%:p")
+	local file_path_rel = vim.fn.expand("%:.")
 	local dir_path = vim.fn.expand("%:p:h")
 	local file_name = vim.fn.expand("%:t")
 	local file_name_no_ext = vim.fn.expand("%:t:r")
 	local dir_name = vim.fn.expand("%:h:t")
 
 	local cmd = raw_cmd:gsub("$EX_FN", fn_name)
+
+	cmd = cmd:gsub("$EX_FILE_PATH_REL", file_path_rel)
 	cmd = cmd:gsub("$EX_FILE_PATH", file_path)
-	cmd = cmd:gsub("$EX_FILE_NAME", file_name)
+
 	cmd = cmd:gsub("$EX_FILE_NAME_NO_EXT", file_name_no_ext)
+	cmd = cmd:gsub("$EX_FILE_NAME", file_name)
+
 	cmd = cmd:gsub("$EX_DIR_PATH", dir_path)
 	cmd = cmd:gsub("$EX_DIR_NAME", dir_name)
+
 	cmd = cmd:gsub("$EX_LINE", line)
 	cmd = cmd:gsub("$EX_COL", col)
 
