@@ -44,7 +44,10 @@ M.setup = function(opts)
 
 	command("Execa", M.exec, {
 		nargs = "*",
-		complete = function()
+		complete = function(arg_lead, cmd_line, cursor_pos)
+			if string.match(cmd_line, "command") then
+				return vim.tbl_keys(CONFIG.commands)
+			end
 			return { "run", "command", "repeat" }
 		end,
 	})
@@ -81,9 +84,6 @@ return M
 --     4. Rust       -- DONE
 --     5. Go         -- DONE
 -- TODO: Extract query to a separate file -- DONE
--- TODO: Escape special characters:
---    1. #
---    2. %
 -- TODO: Extract all non-setup code to a separate file -- DONE
 -- TODO: Readme
 -- TODO: Docs
