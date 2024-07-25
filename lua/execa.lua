@@ -13,14 +13,29 @@ end
 
 M.exec = function(args)
 	local action = table.remove(args.fargs, 1)
+
 	if action == "run" then
-		LAST_EXECUTED_CMD = require("actions.run").run(args.fargs, CONFIG)
+		local cmd = table.concat(args.fargs, " ")
+		LAST_EXECUTED_CMD = cmd
+		require("actions.run").run(cmd, CONFIG)
 	elseif action == "repeat" then
 		if not LAST_EXECUTED_CMD then
 			vim.notify("No command to repeat")
 			return
 		end
-		LAST_EXECUTED_CMD = require("actions.run").run(LAST_EXECUTED_CMD, CONFIG)
+		require("actions.run").run(LAST_EXECUTED_CMD, CONFIG)
+	elseif action == "command" then
+		local cmd_name = table.remove(args.fargs, 1)
+		local cmd = CONFIG.commands[cmd_name]
+
+		if not cmd then
+			vim.notify("No predefined command with name '" .. cmd_name .. "' found")
+			return
+		end
+
+		cmd = cmd .. " " .. table.concat(args.fargs, " ")
+		LAST_EXECUTED_CMD = cmd
+		require("actions.run").run(cmd, CONFIG)
 	end
 end
 
@@ -37,7 +52,7 @@ end
 
 return M
 
--- TODO: CLI -- DONE
+-- TODO: CLI               -- DONE
 --     1. Parse arguments  -- DONE
 --     2. Autocomplete     -- DONE
 -- TODO: Variables:
@@ -49,15 +64,17 @@ return M
 --     6. EX_FNAME
 --     7. EX_FNAME_NO_EXT
 -- TODO: Replace variables -- DONE
--- TODO: Commands:
---     1. Execa run <cmd> <args>
---     2. Execa command <predefined_cmd>
---     3. Execa repeat <- repeat last command -- DONE
+-- TODO: Commands:         -- DONE
+--     1. Execa run <cmd> <args>                -- DONE
+--     2. Execa command <predefined_cmd>        -- DONE
+--     3. Execa repeat <- repeat last command   -- DONE
 -- TODO: Config:
---     1. Predefined commands
+--     1. Predefined commands                   -- DONE
 --     2. Define vsplit vs split for the output -- DONE
---     3. Allow to redefine what gets executed, e.g. let people pass a function that receives the command
--- TODO: Tresitter queries for more languages -- DONE
+--     3. Allow to redefine what gets executed,
+--        e.g. let people pass a function that
+--        receives the command
+-- TODO: Tresitter queries for more languages   -- DONE
 --     1. Javascript -- DONE
 --     2. Typescript -- DONE
 --     3. Python     -- DONE
@@ -68,3 +85,5 @@ return M
 --    1. #
 --    2. %
 -- TODO: Extract all non-setup code to a separate file -- DONE
+-- TODO: Readme
+-- TODO: Docs
