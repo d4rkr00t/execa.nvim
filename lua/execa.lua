@@ -60,5 +60,8 @@ return M
 --     3. Allow to redefine what gets executed,
 --        e.g. let people pass a function that
 --        receives the command
+-- TODO: More variables
+--   1. Test name
+--   2. String value
 -- TODO: Readme
 -- TODO: Docs
