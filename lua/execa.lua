@@ -15,16 +15,27 @@ end
 M.exec = function(args)
 	local action = table.remove(args.fargs, 1)
 
+	--
+	-- Main action – execute the command
+	--
 	if action == "run" then
 		local cmd = table.concat(args.fargs, " ")
 		LAST_EXECUTED_CMD = cmd
 		require("actions.run").run(cmd, CONFIG)
+
+	--
+	-- Repeat the last executed command
+	--
 	elseif action == "repeat" then
 		if not LAST_EXECUTED_CMD then
 			vim.notify("No command to repeat")
 			return
 		end
 		require("actions.run").run(LAST_EXECUTED_CMD, CONFIG)
+
+	--
+	-- Execute a predefined command
+	--
 	elseif action == "command" then
 		local cmd_name = table.remove(args.fargs, 1)
 		local cmd = CONFIG.commands[cmd_name]
@@ -37,6 +48,14 @@ M.exec = function(args)
 		cmd = cmd .. " " .. table.concat(args.fargs, " ")
 		LAST_EXECUTED_CMD = cmd
 		require("actions.run").run(cmd, CONFIG)
+
+	--
+	-- Open telescope picker with predefined commands
+	--
+	elseif action == "telescope" then
+		require("actions.telescope").run(CONFIG)
+	else
+		vim.notify("Invalid action: " .. action)
 	end
 end
 
@@ -49,7 +68,7 @@ M.setup = function(opts)
 			if string.match(cmd_line, "command") then
 				return vim.tbl_keys(CONFIG.commands)
 			end
-			return { "run", "command", "repeat" }
+			return { "run", "command", "repeat", "telescope" }
 		end,
 	})
 end
@@ -63,5 +82,6 @@ return M
 -- TODO: More variables
 --   1. Test name
 --   2. String value
+-- TODO: add command description
 -- TODO: Readme
 -- TODO: Docs
