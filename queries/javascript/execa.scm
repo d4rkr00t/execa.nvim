@@ -6,3 +6,5 @@
    name: (identifier) @function-name
    value: (arrow_function)
 ))
+
+((string_fragment) @string_content)

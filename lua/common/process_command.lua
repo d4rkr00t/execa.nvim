@@ -82,6 +82,40 @@ local function get_fn_name(bufnr, line, col)
 	return ""
 end
 
+local function get_string_content(bufnr, line, col)
+	local trees = get_parent_langtrees(bufnr, { line, col, line, col })
+	local lang = trees[1]:lang()
+	local get_query = vim.treesitter.query.get or vim.treesitter.query.get_query
+	local ok, query = pcall(get_query, lang, "execa")
+
+	if not ok or not query then
+		return ""
+	end
+
+	for i = 1, #trees do
+		local nodes = get_parent_nodes(trees[i], { line, col, line, col })
+		for j = 1, #nodes do
+			if
+				nodes
+				and (
+					nodes[j]:type() == "string_content"
+					or nodes[j]:type() == "string_fragment"
+					or nodes[j]:type() == "interpreted_string_literal"
+				)
+			then
+				local iter = query:iter_captures(nodes[j], 0)
+				local capture_ID, capture_node = iter()
+				if capture_node then
+					local string_content = vim.treesitter.get_node_text(capture_node, 0)
+					return string_content
+				end
+			end
+		end
+	end
+
+	return ""
+end
+
 local M = {}
 
 M.process_command = function(raw_cmd)
@@ -89,7 +123,8 @@ M.process_command = function(raw_cmd)
 
 	local line = api.nvim_win_get_cursor(0)[1]
 	local col = api.nvim_win_get_cursor(0)[2]
-	local fn_name = get_fn_name(bufnr, line, col)
+	local fn_name = get_fn_name(bufnr, line - 1, col)
+	local string_content = get_string_content(bufnr, line - 1, col)
 	local file_path = vim.fn.expand("%:p")
 	local file_path_rel = vim.fn.expand("%:.")
 	local dir_path = vim.fn.expand("%:p:h")
@@ -97,7 +132,15 @@ M.process_command = function(raw_cmd)
 	local file_name_no_ext = vim.fn.expand("%:t:r")
 	local dir_name = vim.fn.expand("%:h:t")
 
-	local cmd = raw_cmd:gsub("$EX_FN", fn_name)
+	local cmd = raw_cmd
+
+	if fn_name then
+		cmd = cmd:gsub("$EX_FN", fn_name)
+	end
+
+	if string_content then
+		cmd = cmd:gsub("$EX_STR", string_content)
+	end
 
 	cmd = cmd:gsub("$EX_FILE_PATH_REL", file_path_rel)
 	cmd = cmd:gsub("$EX_FILE_PATH", file_path)
