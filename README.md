@@ -82,7 +82,7 @@ Opens a telescope picker with a list of pre-defined commands.
 :Execa run cargo test $EX_FN
 ```
 
-<video src="./assets/execa_cargo_test.mp4" width="300">
+<video src="./assets/execa_cargo_test.mp4" width="300"></video>
 
 ### Get the latest version of a package from npm
 
@@ -90,4 +90,4 @@ Opens a telescope picker with a list of pre-defined commands.
 :Execa run npm view $EX_STR version
 ```
 
-<video src="./assets/execa_npm.mp4" width="300">
+<video src="./assets/execa_npm.mp4" width="300"></video>
