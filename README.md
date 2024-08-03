@@ -30,7 +30,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 ### Variables
 
 - `$EX_FN` – Current function name (powered by treesitter)
-- `$EX_STR` – Content of the string under the cursor
+- `$EX_STR` – Content of the string under the cursor (powered by treesitter)
 - `$EX_FILE_PATH_REL` – Relative path to the current file
 - `$EX_FILE_PATH` – Absolute path to the current file
 - `$EX_FILE_NAME_NO_EXT` – Current file name without extension
@@ -82,7 +82,7 @@ Opens a telescope picker with a list of pre-defined commands.
 :Execa run cargo test $EX_FN
 ```
 
-<video src="./assets/execa_cargo_test.mp4" width="300"></video>
+![Execa Cargo Test](./assets/execa_cargo_test.gif)
 
 ### Get the latest version of a package from npm
 
@@ -90,4 +90,4 @@ Opens a telescope picker with a list of pre-defined commands.
 :Execa run npm view $EX_STR version
 ```
 
-<video src="./assets/execa_npm.mp4" width="300"></video>
+![Execa NPM](./assets/execa_npm.gif)
