@@ -75,10 +75,12 @@ end
 
 return M
 
+-- TODO: add command history
 -- TODO: Config:
 --     3. Allow to redefine what gets executed,
 --        e.g. let people pass a function that
 --        receives the command
 -- TODO: add command description
--- TODO: Readme
--- TODO: Docs
+-- TODO: add context to the command
+--       - in telescope picker show only commands matching current file language
+--       - when run check that the context match current file language
