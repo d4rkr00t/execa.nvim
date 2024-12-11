@@ -1,4 +1,4 @@
-*execa.nvim.txt*          For NVIM v0.8.0          Last change: 2024 August 03
+*execa.nvim.txt*         For NVIM v0.8.0         Last change: 2024 December 11
 
 ==============================================================================
 Table of Contents                               *execa.nvim-table-of-contents*
@@ -30,6 +30,9 @@ Using lazy.nvim <https://github.com/folke/lazy.nvim>
     
         -- Prints the command before running
         verbose = true,
+    
+        -- Ask for confirmation before running a command
+        confirm = true,
     
         -- A list of pre-defined commands
         commands = {
