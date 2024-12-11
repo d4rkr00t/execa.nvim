@@ -13,6 +13,12 @@ end
 M.run = function(args, config)
 	local cmd = require("common.process_command").process_command(args)
 	local cur_win = vim.api.nvim_get_current_win()
+	if config.confirm then
+		local response = vim.fn.confirm("Running command → " .. cmd, "&Yes\n&No", 2)
+		if response == 2 then
+			return nil
+		end
+	end
 
 	if config.verbose then
 		vim.notify("Running command → " .. cmd)

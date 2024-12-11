@@ -17,6 +17,9 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim)
     -- Prints the command before running
     verbose = true,
 
+    -- Ask for confirmation before running a command
+    confirm = true,
+
     -- A list of pre-defined commands
     commands = {
       hello = "echo $EX_FN",
