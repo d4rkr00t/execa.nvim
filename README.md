@@ -86,12 +86,12 @@ Runs a pre-defined command in a terminal buffer.
 :Execa command hello
 ```
 
-### Telescope Integration
+### Picker for Pre-defined Commands
 
-Opens a telescope picker with a list of pre-defined commands.
+Opens a picker with a list of pre-defined commands.
 
 ```vim
-:Execa telescope
+:Execa picker
 ```
 
 ## Examples
