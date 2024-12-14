@@ -5,6 +5,7 @@ local M = {}
 local CONFIG = {
 	split = "split",
 	confirm = true,
+	telescope = false,
 }
 local LAST_EXECUTED_CMD = nil
 
@@ -50,10 +51,14 @@ M.exec = function(args)
 		require("actions.run").run(cmd, CONFIG)
 
 	--
-	-- Open telescope picker with predefined commands
+	-- Open a picker with predefined commands
 	--
-	elseif action == "telescope" then
-		require("actions.telescope").run(CONFIG)
+	elseif action == "picker" then
+		if CONFIG.telescope then
+			require("actions.telescope").run(CONFIG)
+		else
+			require("actions.select").run(CONFIG)
+		end
 	else
 		vim.notify("Invalid action: " .. action)
 	end
@@ -68,7 +73,7 @@ M.setup = function(opts)
 			if string.match(cmd_line, "command") then
 				return vim.tbl_keys(CONFIG.commands)
 			end
-			return { "run", "command", "repeat", "telescope" }
+			return { "run", "command", "repeat", "picker" }
 		end,
 	})
 end

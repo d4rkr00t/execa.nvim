@@ -17,6 +17,9 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim)
     -- Ask for confirmation before running a command
     confirm = true,
 
+    -- Use telescope as a picker for pre-defined commands
+    telescope = false,
+
     -- A list of pre-defined commands
     commands = {
       hello = "echo $EX_FN",
@@ -24,6 +27,11 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim)
   }
 }
 ```
+
+#### Optional dependencies:
+
+- [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
+- [dressing.nvim](https://github.com/stevearc/dressing.nvim)
 
 ## Usage
 
