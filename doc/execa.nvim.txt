@@ -109,12 +109,12 @@ Runs a pre-defined command in a terminal buffer.
 <
 
 
-TELESCOPE INTEGRATION ~
+PICKER FOR PRE-DEFINED COMMANDS ~
 
-Opens a telescope picker with a list of pre-defined commands.
+Opens a picker with a list of pre-defined commands.
 
 >vim
-    :Execa telescope
+    :Execa picker
 <
 
 
