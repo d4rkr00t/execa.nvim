@@ -4,7 +4,7 @@ local command = api.nvim_create_user_command
 local M = {}
 local CONFIG = {
 	split = "split",
-	verbose = false,
+	confirm = true,
 }
 local LAST_EXECUTED_CMD = nil
 

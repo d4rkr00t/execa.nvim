@@ -14,9 +14,6 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim)
     -- Open terminal in a vertical or horizontal split
     split = "vsplit",
 
-    -- Prints the command before running
-    verbose = true,
-
     -- Ask for confirmation before running a command
     confirm = true,
 
