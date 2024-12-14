@@ -40,6 +40,18 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 - `$EX_LINE` – Current line number
 - `$EX_COL` – Current col number
 
+### Supported languages for treesitter based variables
+
+- Go
+- JSON
+- JavaScript
+- Lua
+- Python
+- Rust
+- Typescript
+
+> More languages can be supported by contributing treesitter queries
+
 ### Run
 
 Runs a command in a terminal buffer.
