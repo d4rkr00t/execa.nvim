@@ -1,6 +1,6 @@
 # Execa.nvim
 
-This is a simple plugin to run shell commands in a terminal buffer with access to many different "variables".
+This is a simple plugin to run shell commands in a terminal buffer with access to different "variables".
 
 ## Installation
 
@@ -34,7 +34,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 - `$EX_FILE_PATH_REL` – Relative path to the current file
 - `$EX_FILE_PATH` – Absolute path to the current file
 - `$EX_FILE_NAME_NO_EXT` – Current file name without extension
-- `$EX_FILE_NAME` – Current file name
+- `$EX_FILE_NAME` – Current file name with extension
 - `$EX_DIR_PATH` – Current dir path
 - `$EX_DIR_NAME` – Current dir name
 - `$EX_LINE` – Current line number
