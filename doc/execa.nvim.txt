@@ -57,6 +57,19 @@ VARIABLES ~
 - `$EX_COL` – Current col number
 
 
+SUPPORTED LANGUAGES FOR TREESITTER BASED VARIABLES ~
+
+- Go
+- JSON
+- JavaScript
+- Lua
+- Python
+- Rust
+- Typescript
+
+
+  More languages can be supported by contributing treesitter queries
+
 RUN ~
 
 Runs a command in a terminal buffer.
