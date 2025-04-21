@@ -47,6 +47,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 - `$EX_DIR_NAME` – Current dir name
 - `$EX_LINE` – Current line number
 - `$EX_COL` – Current col number
+- `$EX_CWD` – Current working directory
 
 ### Supported languages for treesitter based variables
 

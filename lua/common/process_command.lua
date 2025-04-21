@@ -2,11 +2,12 @@ local api = vim.api
 
 ---@param bufnr integer
 ---@param range Range4
----@return vim.treesitter.LanguageTree[]
+---@return vim.treesitter.LanguageTree[] | nil
 local function get_parent_langtrees(bufnr, range)
-	local root_tree = vim.treesitter.get_parser(bufnr)
-	if not root_tree then
-		return {}
+	local root_tree, root_tree_err = pcall(vim.treesitter.get_parser, bufnr)
+
+	if not root_tree or root_tree_err then
+		return nil
 	end
 
 	local ret = { root_tree }
@@ -51,6 +52,9 @@ end
 
 local function get_fn_name(bufnr, line, col)
 	local trees = get_parent_langtrees(bufnr, { line, col, line, col })
+	if not trees or #trees == 0 then
+		return ""
+	end
 	local lang = trees[1]:lang()
 	local get_query = vim.treesitter.query.get or vim.treesitter.query.get_query
 	local ok, query = pcall(get_query, lang, "execa")
@@ -84,6 +88,9 @@ end
 
 local function get_string_content(bufnr, line, col)
 	local trees = get_parent_langtrees(bufnr, { line, col, line, col })
+	if not trees then
+		return ""
+	end
 	local lang = trees[1]:lang()
 	local get_query = vim.treesitter.query.get or vim.treesitter.query.get_query
 	local ok, query = pcall(get_query, lang, "execa")
@@ -131,6 +138,7 @@ M.process_command = function(raw_cmd)
 	local file_name = vim.fn.expand("%:t")
 	local file_name_no_ext = vim.fn.expand("%:t:r")
 	local dir_name = vim.fn.expand("%:h:t")
+	local cwd = vim.fn.getcwd()
 
 	local cmd = raw_cmd
 
@@ -153,6 +161,8 @@ M.process_command = function(raw_cmd)
 
 	cmd = cmd:gsub("$EX_LINE", line)
 	cmd = cmd:gsub("$EX_COL", col)
+
+	cmd = cmd:gsub("$EX_CWD", cwd)
 
 	return cmd
 end
