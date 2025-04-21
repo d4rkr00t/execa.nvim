@@ -1,4 +1,4 @@
-*execa.nvim.txt*         For NVIM v0.8.0         Last change: 2024 December 14
+*execa.nvim.txt*           For NVIM v0.8.0          Last change: 2025 April 21
 
 ==============================================================================
 Table of Contents                               *execa.nvim-table-of-contents*
@@ -64,6 +64,7 @@ VARIABLES ~
 - `$EX_DIR_NAME` – Current dir name
 - `$EX_LINE` – Current line number
 - `$EX_COL` – Current col number
+- `$EX_CWD` – Current working directory
 
 
 SUPPORTED LANGUAGES FOR TREESITTER BASED VARIABLES ~
