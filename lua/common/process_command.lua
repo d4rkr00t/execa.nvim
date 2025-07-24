@@ -4,9 +4,9 @@ local api = vim.api
 ---@param range Range4
 ---@return vim.treesitter.LanguageTree[] | nil
 local function get_parent_langtrees(bufnr, range)
-	local root_tree, root_tree_err = pcall(vim.treesitter.get_parser, bufnr)
+	local root_tree_ok, root_tree = pcall(vim.treesitter.get_parser, bufnr)
 
-	if not root_tree or root_tree_err then
+	if not root_tree or not root_tree_ok then
 		return nil
 	end
 
